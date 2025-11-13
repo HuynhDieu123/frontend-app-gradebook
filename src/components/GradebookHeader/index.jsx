@@ -6,7 +6,7 @@ import { Button } from '@openedx/paragon';
 import { instructorDashboardUrl } from 'data/services/lms/urls';
 import useGradebookHeaderData from './hooks';
 import messages from './messages';
-
+import './GradebookHeader.scss';
 export const GradebookHeader = () => {
   const { formatMessage } = useIntl();
   const {
@@ -19,6 +19,7 @@ export const GradebookHeader = () => {
   } = useGradebookHeaderData();
   const dashboardUrl = instructorDashboardUrl();
   return (
+    <div className='gradebook-page'> 
     <div className="gradebook-header">
       <a href={dashboardUrl} className="mb-3">
         <span aria-hidden="true">{'<< '}</span>
@@ -43,6 +44,7 @@ export const GradebookHeader = () => {
           {formatMessage(messages.unauthorizedWarning)}
         </div>
       )}
+    </div>
     </div>
   );
 };

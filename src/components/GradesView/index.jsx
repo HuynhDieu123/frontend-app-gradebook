@@ -15,8 +15,8 @@ import ScoreViewInput from './ScoreViewInput';
 import SearchControls from './SearchControls';
 import SpinnerIcon from './SpinnerIcon';
 import StatusAlerts from './StatusAlerts';
-
 import useGradesViewData from './hooks';
+import './GradesView.scss';
 
 export const GradesView = ({ updateQueryParams }) => {
   const {
@@ -26,7 +26,8 @@ export const GradesView = ({ updateQueryParams }) => {
   } = useGradesViewData({ updateQueryParams });
 
   return (
-    <>
+     <div className="page-gradebook" style={{ display: 'grid', justifyItems: 'center' }}>
+    <div className="gradebook-content">
       <SpinnerIcon />
 
       <InterventionsReport />
@@ -34,7 +35,7 @@ export const GradesView = ({ updateQueryParams }) => {
         {stepHeadings.filter}
       </h3>
 
-      <div className="d-flex justify-content-between flex-wrap">
+        <div className="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-3">
         <FilterMenuToggle />
         <SearchControls />
       </div>
@@ -44,7 +45,7 @@ export const GradesView = ({ updateQueryParams }) => {
 
       <h3>{stepHeadings.gradebook}</h3>
 
-      <div className="d-flex justify-content-between align-items-center mb-2">
+      <div className="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-3">
         <ScoreViewInput />
         <BulkManagementControls />
       </div>
@@ -58,7 +59,8 @@ export const GradesView = ({ updateQueryParams }) => {
       <EditModal />
 
       <ImportSuccessToast />
-    </>
+    </div>
+    </div>
   );
 };
 

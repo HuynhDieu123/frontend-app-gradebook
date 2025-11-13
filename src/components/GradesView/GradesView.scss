@@ -154,3 +154,578 @@ select#ScoreView.form-control {
         overflow: auto;
     }
 }
+
+/* ============================
+   Gradebook – Professional UI
+   (scope dưới .page-gradebook để không ảnh hưởng trang khác)
+   ============================ */
+
+.page-gradebook {
+  /* ---- Design tokens (đổi 2 màu gradient ở đây) ---- */
+  --gb-grad-start: #3b82f6;   /* primary */
+  --gb-grad-end:   #22c55e;   /* accent  */
+  --gb-text:       #0f172a;
+  --gb-muted:      #64748b;
+  --gb-border:     #e5e7eb;
+  --gb-bg:         #ffffff;
+  --gb-surface:    #ffffff;
+  --gb-radius:     14px;
+  --gb-radius-sm:  10px;
+  --gb-shadow:     0 10px 24px rgba(2, 8, 23, 0.08);
+  --gb-focus:      0 0 0 3px rgba(59, 130, 246, .25);
+
+  /* ---- Page container ---- */
+  .gradebook-content {
+    /* bỏ 100vw gây lệch layout */
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding: 24px;
+    color: var(--gb-text);
+
+    h3 {
+      font-weight: 800;
+      margin: 12px 0 8px;
+      letter-spacing: 0.2px;
+      color: var(--gb-text);
+    }
+
+    .step-message-1 {
+      margin-top: 16px !important;
+      font-size: 1.125rem;
+      color: var(--gb-muted);
+    }
+  }
+
+  /* ---- “Action bars”: hàng chứa Edit Filters + Search; và ScoreView + Bulk ---- */
+  /* card hóa, làm nền trắng + shadow + bo góc */
+  .gradebook-content
+    > .d-flex.justify-content-between.align-items-start.flex-wrap.gap-3.mb-3,
+  .gradebook-content
+    > .d-flex.justify-content-between.align-items-center.mb-2.flex-wrap.gap-3 {
+    background: var(--gb-surface);
+    border: 1px solid var(--gb-border);
+    border-radius: var(--gb-radius);
+    box-shadow: var(--gb-shadow);
+    padding: 14px 16px;
+  }
+
+  /* ---- Buttons (Bootstrap/Paragon) -> chuyển qua gradient, scoped trong page ---- */
+  .btn,
+  .pgn__btn {
+    border-radius: 999px;
+    font-weight: 600;
+  }
+
+  .btn-primary,
+  .pgn__btn-primary,
+  #edit-filters-btn {
+    background-image: linear-gradient(135deg, var(--gb-grad-start), var(--gb-grad-end));
+    border: none;
+    color: #fff;
+  }
+  .btn-primary:hover,
+  .pgn__btn-primary:hover,
+  #edit-filters-btn:hover {
+    filter: brightness(0.98);
+  }
+
+  .btn-outline-primary,
+  .pgn__btn-outline-primary {
+    background: #fff;
+    border: 1.5px solid transparent;
+    position: relative;
+  }
+  .btn-outline-primary::before,
+  .pgn__btn-outline-primary::before {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: 999px;
+    padding: 1.5px;
+    background: linear-gradient(135deg, var(--gb-grad-start), var(--gb-grad-end));
+    -webkit-mask: 
+      linear-gradient(#000 0 0) content-box, 
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+  }
+  .btn-outline-primary:hover,
+  .pgn__btn-outline-primary:hover {
+    background: #f8fafc;
+  }
+
+  /* ---- Search field (Paragon SearchField) ---- */
+  .search-container {
+    min-width: 280px;
+  }
+  .search-container input,
+  .search-container .form-control,
+  .search-container .pgn__form-control,
+  .search-container input[type="search"] {
+    height: 38px;
+    border-radius: 999px;
+    background: #fff;
+    border: 1.5px solid var(--gb-border);
+    padding-left: 14px !important;
+    padding-right: 40px !important; /* chừa chỗ icon kính lúp */
+    outline: none;
+    box-shadow: none;
+    color: var(--gb-text);
+  }
+  .search-container input::placeholder { color: var(--gb-muted); }
+  .search-container input:hover { border-color: #d1d5db; }
+  .search-container input:focus,
+  .search-container .form-control:focus,
+  .search-container .pgn__form-control:focus {
+    border-color: transparent;
+    box-shadow: var(--gb-focus);
+    outline: none;
+  }
+  /* icon kính lúp thường là button tuyệt đối – đảm bảo trong suốt khi hover */
+  .search-container button {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  /* ---- Filter badges + alerts khoảng cách đẹp hơn ---- */
+  .pgn__chip,
+  .badge {
+    border-radius: 999px;
+  }
+  .pgn__alert,
+  .alert {
+    border-radius: var(--gb-radius);
+  }
+
+  /* ---- Score view select ---- */
+  select#ScoreView.form-control,
+  select#ScoreView.pgn__form-control {
+    height: 38px;
+    border-radius: 999px;
+    border: 1.5px solid var(--gb-border);
+    padding-right: 30px;
+    box-shadow: none;
+  }
+  select#ScoreView.form-control:focus,
+  select#ScoreView.pgn__form-control:focus {
+    border-color: transparent;
+    box-shadow: var(--gb-focus);
+  }
+
+  /* ---- Table container ---- */
+  .gradebook-container,
+  .pgn__data-table-layout-wrapper {
+    background: var(--gb-surface);
+    border-radius: var(--gb-radius);
+    box-shadow: var(--gb-shadow);
+    border: 1px solid transparent;
+    position: relative;
+    overflow: hidden;
+  }
+  /* viền gradient quanh bảng (pseudo để bo góc đẹp với border-radius) */
+  .gradebook-container::before,
+  .pgn__data-table-layout-wrapper::before {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: linear-gradient(135deg, var(--gb-grad-start), var(--gb-grad-end));
+    -webkit-mask: 
+      linear-gradient(#000 0 0) content-box, 
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* bảng, header sticky */
+  .pgn__data-table table,
+  .gradebook-container table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  .pgn__data-table thead th,
+  .gradebook-container thead th {
+    position: sticky;
+    top: 0;
+    background: var(--gb-bg);
+    z-index: 2;
+    font-weight: 700;
+    color: var(--gb-text);
+    box-shadow: inset 0 -1px 0 var(--gb-border);
+  }
+  .pgn__data-table tbody tr:hover,
+  .gradebook-container tbody tr:hover {
+    background: #f8fafc;
+  }
+  .pgn__data-table td, .pgn__data-table th,
+  .gradebook-container td, .gradebook-container th {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--gb-border);
+    vertical-align: middle;
+  }
+
+  /* ---- Pagination buttons ---- */
+  .gradebook-content .btn-group .btn,
+  .gradebook-content .pagination .page-link,
+  .gradebook-content .PageButtons .btn {
+    border-radius: 999px;
+  }
+
+  /* ---- Spinner overlay (dịch xuống, nền mờ nhẹ) ---- */
+  .spinner-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.15);
+    z-index: 9999;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 160px;
+    backdrop-filter: blur(1px);
+  }
+
+  /* ---- Typography & helpers ---- */
+  .color-black { color: #111827; }
+
+  .search-help-text {
+    margin-left: 12px;
+    color: var(--gb-muted);
+  }
+
+  /* ---- Modals ---- */
+  .modal-dialog {
+    max-width: 1000px;
+  }
+  .pgn__modal-body-content .pgn__data-table-layout-wrapper {
+    clear: both;
+    padding: 1rem 0;
+  }
+
+  /* ---- Accessibility: focus-visible chung (thay outline mặc định) ---- */
+  :where(.page-gradebook) *:focus-visible {
+    outline: none !important;
+    box-shadow: var(--gb-focus) !important;
+    border-color: transparent !important;
+    border-radius: 8px;
+  }
+
+  /* ---- Responsive tweaks ---- */
+  @media (max-width: 768px) {
+    .gradebook-content {
+      padding: 16px;
+    }
+    .search-container { width: 100%; }
+    .gradebook-content
+      > .d-flex.justify-content-between.align-items-start.flex-wrap.gap-3.mb-3,
+    .gradebook-content
+      > .d-flex.justify-content-between.align-items-center.mb-2.flex-wrap.gap-3 {
+      gap: 10px !important;
+    }
+    .pgn__data-table thead { display: table-header-group; }
+  }
+
+  /* ===== giữ lại một số rule cũ cần thiết (đã tinh gọn) ===== */
+  .wrap-text-in-cell { overflow-wrap: anywhere; }
+  .form-group, .pgn__form-group { label { font-weight: 700; } }
+}
+
+/* ===== Không nằm trong scope page (giữ nguyên cho components dùng chung) ===== */
+.mb-85 { margin-bottom: 85px; }
+
+/* (Các rule RTL/tooltip đặc thù giữ nguyên nếu bạn đang dùng)
+[dir=rtl] #course-grade-tooltip .arrow {
+  left: 0;
+  &:before {
+    border-width: 0.4rem 0.4rem 0.4rem 0;
+    border-right-color: var(--pgn-color-black);
+  }
+}
+*/
+/* ==== HOTFIX: container bị gom trái – dán CUỐI FILE ==== */
+
+/* 1) Giết width:100vw cũ */
+.gradebook-content {
+  width: 100% !important;
+}
+
+/* 2) Canh giữa kiểu Bootstrap + không bị co bởi flex cha */
+.gradebook-content.page-gradebook {
+  box-sizing: border-box;
+  flex: 0 1 auto !important;
+  width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+
+  /* max-width giống Bootstrap container */
+  @media (min-width: 576px)  { max-width: 540px  !important; }
+  @media (min-width: 768px)  { max-width: 720px  !important; }
+  @media (min-width: 992px)  { max-width: 960px  !important; }
+  @media (min-width: 1200px) { max-width: 1140px !important; }
+  @media (min-width: 1400px) { max-width: 1320px !important; }
+}
+
+/* 3) Hai “action bars” phải full bề rộng container */
+.gradebook-content.page-gradebook
+  > .d-flex.justify-content-between.align-items-start.flex-wrap.gap-3.mb-3,
+.gradebook-content.page-gradebook
+  > .d-flex.justify-content-between.align-items-center.mb-2.flex-wrap.gap-3 {
+  width: 100% !important;
+}
+
+/* 4) Phòng trường hợp rule cũ set float/margin lệch */
+.gradebook-content.page-gradebook { float: none !important; }
+
+/* ==== HOTFIX: container bị gom trái – dán CUỐI FILE ==== */
+
+/* 1) Giết width:100vw cũ */
+.gradebook-content {
+  width: 100% !important;
+}
+
+/* 2) Canh giữa kiểu Bootstrap + không bị co bởi flex cha */
+.gradebook-content.page-gradebook {
+  box-sizing: border-box;
+  flex: 0 1 auto !important;
+  width: 100% !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+
+  /* max-width giống Bootstrap container */
+  @media (min-width: 576px)  { max-width: 540px  !important; }
+  @media (min-width: 768px)  { max-width: 720px  !important; }
+  @media (min-width: 992px)  { max-width: 960px  !important; }
+  @media (min-width: 1200px) { max-width: 1140px !important; }
+  @media (min-width: 1400px) { max-width: 1320px !important; }
+}
+
+/* 3) Hai “action bars” phải full bề rộng container */
+.gradebook-content.page-gradebook
+  > .d-flex.justify-content-between.align-items-start.flex-wrap.gap-3.mb-3,
+.gradebook-content.page-gradebook
+  > .d-flex.justify-content-between.align-items-center.mb-2.flex-wrap.gap-3 {
+  width: 100% !important;
+}
+
+/* 4) Phòng trường hợp rule cũ set float/margin lệch */
+.gradebook-content.page-gradebook { float: none !important; }
+/* ==== FORCE CENTER cho mọi layout parent (grid/flex/block) ==== */
+
+/* bỏ hẳn 100vw cũ */
+.gradebook-content { width: 100% !important; }
+
+/* phần tử đang có CẢ hai class trên cùng thẻ */
+.gradebook-content.page-gradebook {
+  display: block !important;
+
+  /* rộng tối đa 1320 và căn giữa */
+  width: min(100%, 1320px) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+
+  /* nếu parent là FLEX: không cho nó giãn full hàng */
+  flex: 0 1 auto !important;
+  align-self: flex-start !important;
+
+  /* nếu parent là GRID: căn giữa theo trục ngang của grid */
+  justify-self: center !important;
+}
+
+/* Hai khối action-bar chiếm đủ bề rộng container */
+.gradebook-content.page-gradebook
+  > .d-flex.justify-content-between.align-items-start.flex-wrap.gap-3.mb-3,
+.gradebook-content.page-gradebook
+  > .d-flex.justify-content-between.align-items-center.mb-2.flex-wrap.gap-3 {
+  width: 100% !important;
+}
+
+/* Phòng rule lạ set float/margin */
+.gradebook-content.page-gradebook { float: none !important; }
+
+/* ===== RESET LAYOUT CHO TRANG GRADEBOOK (chỉ can thiệp đúng scope) ===== */
+
+/* 1) Hủy mọi grid/flex của wrapper mà Drawer đã áp vào */
+.page-gradebook {
+  display: block !important;
+  grid-template-columns: none !important;
+  grid-auto-columns: auto !important;
+  grid-auto-flow: row !important;
+  gap: 0 !important;
+}
+
+/* 2) Đảm bảo wrapper full bề rộng viewport */
+.page-gradebook {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* 3) Canh giữa và giới hạn bề rộng phần nội dung chính */
+.page-gradebook .gradebook-content {
+  display: block !important;
+  width: 100% !important;           /* KHÔNG dùng 100vw */
+  max-width: 1200px !important;     /* cần rộng hơn thì tăng số này */
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+
+  /* nếu parent bên ngoài vẫn là flex thì không cho item giãn lung tung */
+  flex: 0 1 auto !important;
+  float: none !important;
+}
+
+/* 4) Tất cả khối con trực tiếp (action bars, alerts, table wrapper…) chiếm đủ bề rộng container */
+.page-gradebook .gradebook-content > * {
+  width: 100% !important;
+}
+
+/* 5) Input search không tràn ra ngoài khi card hẹp */
+.page-gradebook .search-container {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+/* ==== Step 1 bar: Edit Filters + Search nằm 1 hàng (desktop) ==== */
+@media (min-width: 768px) {
+  .page-gradebook .gradebook-content
+    > .d-flex.justify-content-between.align-items-start.flex-wrap.gap-3.mb-3 {
+    display: flex !important;
+    align-items: center !important;   /* căn giữa theo trục dọc */
+    flex-wrap: nowrap !important;     /* không xuống hàng */
+    gap: 12px !important;
+  }
+
+  /* nút không kéo giãn; bỏ margin-bottom nếu có */
+  #edit-filters-btn {
+    flex: 0 0 auto !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* search chiếm hết phần còn lại */
+  .page-gradebook .search-container {
+    flex: 1 1 auto !important;
+    width: auto !important;           /* đừng ép 100% ở desktop */
+    min-width: 320px;
+  }
+  /* bên trong SearchField full chiều ngang khối search */
+  .page-gradebook .search-container .pgn__form-group,
+  .page-gradebook .search-container form {
+    width: 100% !important;
+  }
+}
+
+/* Mobile: cho phép xuống hàng, search full width */
+@media (max-width: 767.98px) {
+  .page-gradebook .gradebook-content
+    > .d-flex.justify-content-between.align-items-start.flex-wrap.gap-3.mb-3 {
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+  }
+  .page-gradebook .search-container {
+    width: 100% !important;
+  }
+}
+
+/* ==== Search icon hover: đổi màu, bỏ nền trắng ==== */
+.page-gradebook .search-container button,
+.page-gradebook .search-container .btn,
+.page-gradebook .search-container .pgn__btn {
+  background: transparent !important;
+  border: 0 !important;
+  color: var(--gb-muted) !important;        /* màu mặc định của icon */
+  width: 36px; height: 36px;                /* click target đẹp */
+  border-radius: 999px;
+  display: inline-flex; align-items: center; justify-content: center;
+  box-shadow: none !important;
+  transition: color .15s ease, background .15s ease, transform .1s;
+}
+
+/* màu khi hover (đổi theo ý bạn) */
+.page-gradebook .search-container button:hover,
+.page-gradebook .search-container .btn:hover,
+.page-gradebook .search-container .pgn__btn:hover {
+  color: var(--gb-grad-start) !important;   /* #3b82f6 mặc định, đổi tùy thích */
+  background: rgba(59,130,246,.12) !important;  /* nền nhạt, có thể bỏ */
+}
+
+/* đảm bảo SVG dùng đúng màu chữ */
+.page-gradebook .search-container button svg,
+.page-gradebook .search-container .pgn__btn svg {
+  fill: currentColor !important;
+  color: currentColor !important;
+}
+
+/* ==== Kill black outline khi focus vào SearchField ==== */
+.page-gradebook .search-container :where(input, .form-control, .pgn__form-control) {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* chặn cả lúc focus & focus-visible */
+.page-gradebook .search-container :where(input, .form-control, .pgn__form-control):focus,
+.page-gradebook .search-container :where(input, .form-control, .pgn__form-control):focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: var(--gb-border) !important;   /* giữ border như trạng thái bình thường */
+}
+
+/* một số browser áp style riêng cho type=search */
+.page-gradebook .search-container input[type="search"] {
+  -webkit-appearance: none;  /* Chrome/Safari */
+  appearance: none;
+}
+
+/* nếu wrapper input-group có hiệu ứng focus-within, tắt luôn */
+.page-gradebook .search-container:focus-within,
+.page-gradebook .search-container .pgn__input-group:focus-within,
+.page-gradebook .search-container .pgn__form-group:focus-within {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* nút icon (kính lúp/X) cũng không đổi nền/viền khi focus */
+.page-gradebook .search-container :where(button, .btn, .pgn__btn):focus,
+.page-gradebook .search-container :where(button, .btn, .pgn__btn):focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* --- FIX viền gradient bị tràn quanh bảng --- */
+
+/* Tắt pseudo-ring cũ */
+.page-gradebook .gradebook-container::before,
+.page-gradebook .pgn__data-table-layout-wrapper::before {
+  content: none !important;
+}
+
+/* Dùng border-gradient bằng background-clip: KHÔNG tràn, bo góc chuẩn */
+.page-gradebook .pgn__data-table-layout-wrapper,
+.page-gradebook .gradebook-container {
+  position: relative;
+  box-sizing: border-box;
+  border-radius: 14px;
+  border: 1.5px solid transparent;
+  background:
+    linear-gradient(var(--gb-surface), var(--gb-surface)) padding-box,
+    linear-gradient(135deg, var(--gb-grad-start), var(--gb-grad-end)) border-box;
+  box-shadow: var(--gb-shadow);
+  overflow: hidden; /* giữ bo góc cho nội dung */
+}
+
+/* Đảm bảo bảng không rộng hơn khung */
+.page-gradebook .pgn__data-table { overflow-x: auto; }
+.page-gradebook .pgn__data-table table,
+.page-gradebook .gradebook-container table {
+  width: 100%;
+  table-layout: fixed;  /* tránh cột đẩy tràn viền */
+}

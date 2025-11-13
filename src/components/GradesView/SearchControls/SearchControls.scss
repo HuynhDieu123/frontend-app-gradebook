@@ -1,0 +1,250 @@
+/* ========= SearchControls.scss (drop-in) ========= */
+
+/* 1) Màu gradient chỉnh ở đây */
+.search-container {
+  --grad-start: #00b2ff;
+  --grad-end:   #00e39f;
+  --grad: linear-gradient(90deg, var(--grad-start), var(--grad-end));
+}
+
+/* 2) Ẩn label thị giác (vẫn accessible). Muốn hiện lại: xoá block này */
+.search-container .pgn__searchfield .form-label {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* 3) VỎ PILL có viền gradient (vẽ trực tiếp trên .pgn__searchfield) */
+.search-container .pgn__searchfield {
+  display: inline-flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  height: 44px !important;
+
+  border: 2px solid transparent !important;
+  border-radius: 9999px !important;
+  background-image: linear-gradient(#fff, #fff), var(--grad) !important;
+  background-origin: border-box !important;
+  background-clip: padding-box, border-box !important;
+
+  padding: 0 52px 0 14px !important;     /* chừa chỗ cho nút submit bên phải (kể cả external) */
+  overflow: hidden !important;           /* cắt rò rỉ từ con bên trong */
+  box-shadow: none !important;
+}
+.search-container .pgn__searchfield:hover,
+.search-container .pgn__searchfield:focus-within {
+  outline: none !important;
+  box-shadow: none !important;           /* bỏ outline khi hover/focus */
+}
+
+/* 4) Dọn nền/viền ở các wrapper con để không đè border gradient */
+.search-container .pgn__searchfield .pgn__searchfield_wrapper,
+.search-container .pgn__searchfield .input-group,
+.search-container .pgn__searchfield .input-group-prepend,
+.search-container .pgn__searchfield .input-group-append,
+.search-container .pgn__searchfield .input-group-text {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+}
+
+/* 5) Bản thân ô input – trong suốt, không viền, không gradient riêng */
+.search-container .pgn__searchfield input[type="search"],
+.search-container .pgn__searchfield input.form-control,
+.search-container .pgn__searchfield .pgn__searchfield-input {
+  height: 40px !important;
+  background: transparent !important;
+  background-image: none !important;     /* nuke gradient cũ nếu có */
+  border: 0 !important;
+  border-radius: 9999px !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+/* Tắt decoration mặc định của search (WebKit) */
+.search-container .pgn__searchfield input[type="search"]::-webkit-search-decoration,
+.search-container .pgn__searchfield input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* 6) Nút submit – INTERNAL (nằm trong input-group) */
+.search-container .pgn__searchfield .input-group-append .btn,
+.search-container .pgn__searchfield .btn.pgn__searchfield-submit {
+  border: 0 !important;
+  background: #fff !important;           /* cùng màu phần trong pill */
+  color: #111 !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 50% !important;
+  margin-left: 8px !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+.search-container .pgn__searchfield .btn svg {
+  width: 1rem; height: 1rem; fill: currentColor; stroke: currentColor;
+}
+
+/* 7) Nút submit – EXTERNAL (Paragon render bên ngoài .pgn__searchfield)
+      Kéo nó vào phần trống bên phải đã chừa bằng padding-right */
+.search-container .pgn__searchfield + button[type="submit"],
+.search-container .pgn__searchfield + .btn {
+  margin-left: -48px !important;         /* đè vào trong pill */
+  background: #fff !important;
+  color: #111 !important;
+  width: 36px !important;
+  height: 36px !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* 8) Nút clear (dấu X) – luôn rõ, không outline */
+.search-container .pgn__searchfield button[aria-label*="clear"] {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+.search-container .pgn__searchfield button[aria-label*="clear"] svg {
+  color: #000 !important;
+  fill: currentColor !important;
+}
+
+/* 9) Dọn dẹp: không cho phần tử con nào vẽ outline/box-shadow khi hover/focus */
+.search-container .pgn__searchfield *:hover,
+.search-container .pgn__searchfield *:focus,
+.search-container .pgn__searchfield *:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* 10) Hint dưới ô search */
+.search-container .search-help-text {
+  margin-top: .25rem;
+  color: var(--pgn-color-text-muted, #6c757d);
+}
+
+/* ========== OUTER PILL (gradient) — giữ nguyên ========== */
+.search-container {
+  --grad-start: #00b2ff;
+  --grad-end:   #00e39f;
+  --grad: linear-gradient(90deg, var(--grad-start), var(--grad-end));
+}
+
+.search-container .pgn__searchfield.pgn__searchfield {
+  position: relative !important;
+  height: 44px !important;
+  width: 100% !important;
+  border-radius: 9999px !important;
+
+  border: 2px solid transparent !important;
+  background-image: linear-gradient(#fff, #fff), var(--grad) !important;
+  background-origin: border-box !important;
+  background-clip: padding-box, border-box !important;
+
+  padding: 0 52px 0 14px !important;  /* chừa chỗ nút */
+  overflow: hidden !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* ========== RESET wrapper con để không tự vẽ khung ========== */
+.search-container .pgn__searchfield .input-group,
+.search-container .pgn__searchfield .input-group-prepend,
+.search-container .pgn__searchfield .input-group-append,
+.search-container .pgn__searchfield .input-group-text {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  min-width: 0 !important;
+  flex: 1 1 auto !important;
+}
+
+/* ========== INPUT: reset + CLIP-PATH để cắt mọi viền focus nằm sát mép ========== */
+/* all:unset để xoá triệt để, rồi set lại tối thiểu + clip-path cắt 2px trên/dưới */
+.search-container .pgn__searchfield input[type="search"],
+.search-container .pgn__searchfield input.form-control,
+.search-container .pgn__searchfield .pgn__searchfield-input {
+  all: unset;
+  display: block !important;
+  width: 100% !important;
+  height: 40px !important;
+  background: transparent !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  font: inherit !important;
+  color: inherit !important;
+  caret-color: inherit !important;
+  padding: 0 !important;
+  margin: 0 !important;
+
+  /* cắt mép trên/dưới 2px để nếu browser cố vẽ focus ring, nó bị cắt không còn thấy */
+  clip-path: inset(2px 0 2px 0 round 9999px) !important;
+}
+
+/* vẫn đảm bảo mọi state không vẽ viền/bóng/outline */
+.search-container .pgn__searchfield input[type="search"]:hover,
+.search-container .pgn__searchfield input[type="search"]:focus,
+.search-container .pgn__searchfield input[type="search"]:active,
+.search-container .pgn__searchfield input.form-control:hover,
+.search-container .pgn__searchfield input.form-control:focus,
+.search-container .pgn__searchfield input.form-control:active,
+.search-container .pgn__searchfield input:focus-visible {
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+/* dọn decoration mặc định của trình duyệt */
+.search-container .pgn__searchfield input[type="search"]::-webkit-search-decoration,
+.search-container .pgn__searchfield input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+}
+.search-container .pgn__searchfield input[type="search"]::-moz-focus-inner { border: 0 !important; }
+.search-container .pgn__searchfield input[type="search"]:-moz-focusring { outline: 0 !important; }
+
+/* ========== Nút submit external kéo vào trong pill (nếu có) ========== */
+.search-container .pgn__searchfield + button[type="submit"],
+.search-container .pgn__searchfield + .btn {
+  margin-left: -48px !important;
+  width: 36px !important; height: 36px !important; border-radius: 50% !important;
+  background: #fff !important; color: #111 !important;
+  border: 0 !important; box-shadow: none !important; outline: none !important;
+}
+
+/* Nút submit internal (nếu render trong input-group) */
+.search-container .pgn__searchfield .input-group-append .btn,
+.search-container .pgn__searchfield .btn.pgn__searchfield-submit {
+  width: 36px !important; height: 36px !important; border-radius: 50% !important;
+  background: #fff !important; color: #111 !important;
+  border: 0 !important; box-shadow: none !important; outline: none !important;
+}
+
+/* Ẩn nhãn thị giác (tuỳ chọn) */
+.search-container .pgn__searchfield .form-label {
+  position: absolute !important;
+  width: 1px !important; height: 1px !important;
+  padding: 0 !important; margin: -1px !important;
+  overflow: hidden !important; clip: rect(0 0 0 0) !important;
+  white-space: nowrap !important; border: 0 !important;
+}
+
+/* Trường hợp Windows Forced Colors ép outline */
+@media (forced-colors: active) {
+  .search-container .pgn__searchfield input {
+    forced-color-adjust: none !important;
+  }
+}

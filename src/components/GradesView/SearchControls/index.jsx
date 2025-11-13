@@ -2,7 +2,7 @@ import React from 'react';
 
 import { SearchField } from '@openedx/paragon';
 import useSearchControlsData from './hooks';
-
+import './SearchControls.scss';
 /**
  * Controls for filtering the GradebookTable. Contains the "Edit Filters" button for opening the filter drawer
  * as well as the search box for searching by username/email.
@@ -20,8 +20,9 @@ export const SearchControls = () => {
   return (
     <div className="search-container">
       <SearchField
+        autoComplete="off"
+        inputProps={{ style: { outline: 'none' }}}
         onSubmit={onSubmit}
-        label={inputLabel}
         onBlur={onBlur}
         onClear={onClear}
         value={searchValue}
