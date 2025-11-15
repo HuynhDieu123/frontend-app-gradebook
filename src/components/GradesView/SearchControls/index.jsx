@@ -21,7 +21,6 @@ export const SearchControls = () => {
     <div className="search-container">
       <SearchField
         autoComplete="off"
-        inputProps={{ style: { outline: 'none' }}}
         onSubmit={onSubmit}
         onBlur={onBlur}
         onClear={onClear}

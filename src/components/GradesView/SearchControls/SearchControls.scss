@@ -248,3 +248,121 @@
     forced-color-adjust: none !important;
   }
 }
+
+/* KILL TẤT CẢ focus ring / box-shadow bên trong search-container */
+.search-container,
+.search-container *,
+.search-container *::before,
+.search-container *::after {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Đặc biệt dập luôn mọi state focus của SearchField wrapper */
+.search-container .pgn__searchfield,
+.search-container .pgn__searchfield:focus,
+.search-container .pgn__searchfield:focus-within,
+.search-container .pgn__searchfield.pgn__searchfield--has-focus,
+.search-container .pgn__searchfield.pgn__searchfield--is-focused {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;   /* phòng trường hợp nó dùng border làm ring */
+}
+
+/* Và cả bản thân input */
+.search-container .pgn__searchfield input,
+.search-container .pgn__searchfield input:focus,
+.search-container .pgn__searchfield input:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border: 0 !important;
+}
+// ...existing code...
+/* Force-remove any inner border / focus ring that still appears */
+.search-container .pgn__searchfield .form-control,
+.search-container .pgn__searchfield input,
+.search-container .pgn__searchfield input[type="search"],
+.search-container .pgn__searchfield .pgn__searchfield-input {
+  border: 0 !important;
+  border-style: none !important;
+  border-width: 0 !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  outline: none !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  background: transparent !important;
+  background-clip: padding-box !important;
+  clip-path: inset(2px 0 2px 0 round 9999px) !important; /* giữ clip nếu cần */
+}
+
+/* browser-specific internals */
+.search-container .pgn__searchfield input::-moz-focus-inner { border: 0 !important; padding: 0 !important; }
+.search-container .pgn__searchfield input::-webkit-search-decoration,
+.search-container .pgn__searchfield input::-webkit-search-cancel-button { -webkit-appearance: none !important; appearance: none !important; }
+/* ensure focus still won't draw a visible ring */
+.search-container .pgn__searchfield input:focus,
+.search-container .pgn__searchfield input:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* === KILL viền đen trong cùng của SearchField === */
+
+/* Wrapper ngay ngoài input: xoá border + shadow mặc định */
+.search-container .pgn__searchfield .pgn__form-control-decorator-group {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Khi có has-focus (click vào) thì cũng không cho vẽ viền */
+.search-container .pgn__searchfield.has-focus .pgn__form-control-decorator-group,
+.search-container .pgn__searchfield .pgn__form-control-decorator-group.has-focus,
+.search-container .pgn__searchfield .pgn__form-control-decorator-group:focus-within {
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Đảm bảo input không tự vẽ viền nữa */
+.search-container .pgn__searchfield input,
+.search-container .pgn__searchfield input:focus,
+.search-container .pgn__searchfield input:focus-visible {
+  border: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+/* ===== TẮT FOCUS RING CỦA PARAGON TRONG Ô SEARCH ===== */
+
+/* 1) Tắt box-shadow / outline trên bản thân input */
+.search-container .gb-search-input,
+.search-container .gb-search-input:focus,
+.search-container .gb-search-input:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  background-color: transparent;   /* để chỉ thấy viền pill bên ngoài */
+}
+
+/* 2) Tắt focus ring được vẽ trên wrapper khi có .has-focus */
+.search-container .pgn__searchfield.has-focus,
+.search-container .pgn__searchfield.has-focus * {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* 3) Nhiều khả năng Paragon vẽ thêm viền qua pseudo-element */
+.search-container .pgn__searchfield.has-focus::before,
+.search-container .pgn__searchfield.has-focus::after,
+.search-container .pgn__searchfield .pgn__form-control-decorator-group::before,
+.search-container .pgn__searchfield .pgn__form-control-decorator-group::after {
+  box-shadow: none !important;
+  border: 0 !important;
+}
+
+/* 4) Nếu viền đen là border của group thì xoá luôn */
+.search-container .pgn__searchfield .pgn__form-control-decorator-group,
+.search-container .pgn__searchfield.has-focus .pgn__form-control-decorator-group {
+  border: 0 !important;
+}

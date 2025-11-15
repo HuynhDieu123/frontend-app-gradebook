@@ -729,3 +729,23 @@ select#ScoreView.form-control {
   width: 100%;
   table-layout: fixed;  /* tránh cột đẩy tràn viền */
 }
+
+/* Kill mọi outline/box-shadow focus của SearchField (kể cả wrapper) */
+.search-container .pgn__searchfield,
+.search-container .pgn__searchfield:focus,
+.search-container .pgn__searchfield:focus-within,
+.search-container .pgn__searchfield.pgn__searchfield--is-focused,
+.search-container .pgn__searchfield.pgn__searchfield--has-focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Phòng trường hợp focus ring dính trên input chứ không phải wrapper */
+.search-container .pgn__searchfield input,
+.search-container .pgn__searchfield input:focus,
+.search-container .pgn__searchfield input:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border: 0 !important;
+}
+
